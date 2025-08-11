@@ -6,71 +6,74 @@ const Header = () => {
   const location = useLocation();
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/about', label: 'About Us' },
-    { path: '/services', label: 'Our Service' },
-    { path: '/info', label: 'Quick Info' },
-    { path: '/contact', label: 'Contact Us' },
+    { path: '/about', label: 'ABOUT US' },
+    { path: '/services', label: 'OUR SERVICE' },
+    { path: '/info', label: 'QUICK INFO' },
+    { path: '/contact', label: 'CONTACT US' },
   ];
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="bg-gray-900 shadow-lg sticky top-0 z-50">
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-white flex items-center">
-            <span className="text-orange-500 mr-2">Q</span>
-            Qoyy Global
-          </Link>
+    <header className="bg-transparent top-0 z-50 h-32">
+      <div className="container-custom h-full">
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex items-center justify-between flex-1">
+            {/* Logo */}
+            <Link to="/" className="text-2xl font-bold text-white flex items-center">
+              <img 
+                src="/src/assets/QOYY GLOBAL-WHITE-LOGO.png" 
+                alt="QOYY GLOBAL" 
+                className="h-30 mr-2"
+              />
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`text-lg font-medium transition-colors duration-200 ${
-                  isActive(link.path)
-                    ? 'text-orange-500 border-b-2 border-orange-500'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 text-sm"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-300 hover:text-white"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-gray-300 hover:text-white"
             >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+          {/* Ticker line (white, no animation, no content) */}
+          <div className="w-full h-1 bg-white mb-1"></div>
         </div>
+
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
@@ -81,11 +84,7 @@ const Header = () => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    isActive(link.path)
-                      ? 'text-orange-500 bg-gray-700'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
-                  }`}
+                  className="block px-3 py-2 rounded-md text-base font-medium bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-200"
                 >
                   {link.label}
                 </Link>
