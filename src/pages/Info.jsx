@@ -13,7 +13,7 @@ const Info = () => {
         <meta name="description" content="Answers for every question. Explore our services, process, and support for your marketing and creative needs." />
       </Helmet>
       
-      <main className="min-h-screen bg-gray-800">
+      <main className="min-h-screen">
         <div className="container-custom section-padding">
           <div className="max-w-6xl mx-auto">
             {/* Main Heading */}
@@ -21,7 +21,7 @@ const Info = () => {
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
                 ANSWERS FOR EVERY QUESTION
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300">
+              <p className="text-xl md:text-2xl text-white">
                 Explore our services, process, and support for your marketing and creative needs.
               </p>
             </div>
@@ -31,7 +31,7 @@ const Info = () => {
               <div className="space-y-8">
                 {[...Array(4)].map((_, index) => (
                   <div key={index} className="animate-pulse">
-                    <div className="bg-gray-700 p-8 rounded-lg">
+                    <div className=" p-8 rounded-lg">
                       <div className="h-8 bg-gray-600 rounded mb-4 w-1/2"></div>
                       <div className="space-y-3">
                         <div className="h-6 bg-gray-600 rounded w-full"></div>
@@ -45,11 +45,11 @@ const Info = () => {
               </div>
             ) : (
               <div className="space-y-8">
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h3 className="text-2xl font-bold text-white mb-4">
                     Which services are available?
                   </h3>
-                  <p className="text-lg text-gray-300 leading-relaxed">
+                  <p className="text-lg text-white leading-relaxed">
                     We offer comprehensive media monitoring and public relations services including real-time brand monitoring, 
                     sentiment analysis, crisis management, press release distribution, media relations, strategic communication, 
                     digital PR, and government relations. Our services are tailored to meet the specific needs of government 
@@ -57,11 +57,11 @@ const Info = () => {
                   </p>
                 </div>
                 
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h3 className="text-2xl font-bold text-white mb-4">
                     Who do you usually work with?
                   </h3>
-                  <p className="text-lg text-gray-300 leading-relaxed">
+                  <p className="text-lg text-white leading-relaxed">
                     Our client base includes government agencies, corporate brands, and organizations across various sectors. 
                     We have extensive experience working with both public and private sector clients, understanding the unique 
                     challenges and opportunities that each sector presents. Our team is equipped to handle projects of all sizes, 
@@ -69,11 +69,11 @@ const Info = () => {
                   </p>
                 </div>
                 
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h3 className="text-2xl font-bold text-white mb-4">
                     How fast is project delivery?
                   </h3>
-                  <p className="text-lg text-gray-300 leading-relaxed">
+                  <p className="text-lg text-white leading-relaxed">
                     Project timelines vary depending on complexity and scope. Media monitoring services can be implemented 
                     within 24-48 hours, while comprehensive PR campaigns typically take 2-4 weeks to develop and launch. 
                     Crisis management responses are immediate, with 24/7 support available. We provide detailed timelines 
@@ -81,11 +81,11 @@ const Info = () => {
                   </p>
                 </div>
                 
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h3 className="text-2xl font-bold text-white mb-4">
                     How can I get a proposal?
                   </h3>
-                  <p className="text-lg text-gray-300 leading-relaxed">
+                  <p className="text-lg text-white leading-relaxed">
                     Getting a proposal is simple. You can contact us via WhatsApp for quick responses or email for detailed 
                     discussions. We'll schedule a consultation to understand your specific needs, challenges, and objectives. 
                     Based on this discussion, we'll provide a comprehensive proposal including strategy, timeline, deliverables, 
@@ -98,11 +98,11 @@ const Info = () => {
             {/* Additional Info */}
             {!isLoading && (
               <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h4 className="text-xl font-semibold text-orange-500 mb-4">
                     Our Process
                   </h4>
-                  <div className="space-y-4 text-gray-300">
+                  <div className="space-y-4 text-white">
                     <div className="flex items-start">
                       <span className="text-orange-500 mr-3 mt-1 font-bold">1.</span>
                       <div>
@@ -134,11 +134,11 @@ const Info = () => {
                   </div>
                 </div>
                 
-                <div className="bg-gray-700 p-8 rounded-lg">
+                <div className=" p-8 rounded-lg">
                   <h4 className="text-xl font-semibold text-orange-500 mb-4">
                     Why Choose Us
                   </h4>
-                  <div className="space-y-4 text-gray-300">
+                  <div className="space-y-4 text-white">
                     <div className="flex items-start">
                       <span className="text-orange-500 mr-3 mt-1">✓</span>
                       <div>

@@ -13,7 +13,7 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen w-full">
           {/* Background image */}
           <div
             className={
@@ -24,13 +24,13 @@ function App() {
                   case "/":
                     return "bg-[url('/src/assets/Perbincangan-Agensi-Kreatif_simple_compose.png')] bg-cover bg-center min-h-screen flex flex-col";
                   case "/about":
-                    return "bg-[url('/src/assets/Keadaan-Pekerja-Fancy_simple_compose.png')] bg-cover bg-center min-h-screen flex flex-col";
+                    return "bg-[url('/src/assets/Gambar_Company_Website.jpg')] bg-cover bg-center min-h-screen flex flex-col";
                   case "/services":
-                    return "bg-[url('/src/assets/services-bg.png')] bg-cover bg-center min-h-screen flex flex-col";
+                    return "bg-[url('/src/assets/Perbincangan-Agensi-Kreatif_simple_compose.png')] bg-cover bg-center min-h-screen flex flex-col";
                   case "/info":
-                    return "bg-[url('/src/assets/info-bg.png')] bg-cover bg-center min-h-screen flex flex-col";
+                    return "bg-[url('/src/assets/quickInfo-bg.png')] bg-cover bg-center min-h-screen flex flex-col";
                   case "/contact":
-                    return "bg-[url('/src/assets/contact-bg.png')] bg-cover bg-center min-h-screen flex flex-col";
+                    return "bg-[url('/src/assets/contactUs.png')] bg-cover bg-center min-h-screen flex flex-col";
                   default:
                     return "";
                 }
@@ -38,16 +38,27 @@ function App() {
             }
           >
           {/* Background image */}
-          <div className="bg-black bg-opacity-60 min-h-screen">
-            <Header />
-            <div className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/info" element={<Info />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
+          <div className="bg-black bg-opacity-20 min-h-screen relative w-full">
+            {/* Layer.png overlay */}
+            <div className="absolute inset-0 z-0">
+              <img 
+                src="/src/assets/Layer.png" 
+                alt="Layer Overlay" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div className="relative z-10">
+              <Header />
+              <div className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/info" element={<Info />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </div>
             </div>
           </div>
           </div>
