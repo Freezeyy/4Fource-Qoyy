@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite",
+    "dev:strapi": "echo 'Make sure Strapi backend is running on http://localhost:1337' && vite"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",

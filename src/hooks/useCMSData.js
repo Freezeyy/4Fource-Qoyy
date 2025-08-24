@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getStrapiURL, getAuthHeaders } from '../config/strapi';
 
 const useCMSData = (endpoint) => {
   const [data, setData] = useState(null);
@@ -12,17 +13,33 @@ const useCMSData = (endpoint) => {
         setIsLoading(true);
         setError(null);
         
-        // For demo purposes, we'll use mock data
-        // Replace this with actual API call when backend is ready
-        const response = await axios.get(`/api/cms/${endpoint}`);
-        setData(response.data);
-      } catch (err) {
-        // For demo purposes, we'll use mock data instead of throwing error
-        console.log('API not available, using mock data');
+        // Map endpoint to correct API path
+        let apiPath = endpoint;
+        if (endpoint === 'services') {
+          apiPath = 'info'; // Map services to info endpoint
+        }
         
-        // Mock data based on endpoint
-        const mockData = getMockData(endpoint);
-        setData(mockData);
+        const fullUrl = getStrapiURL(`/api/${apiPath}`);
+        const headers = getAuthHeaders();
+        
+        // Fetch data from Strapi
+        const response = await axios.get(fullUrl, {
+          headers: headers,
+          params: {
+            populate: '*', // Include all relations (like images)
+          }
+        });
+
+        // Transform Strapi response to match our frontend structure
+        const transformedData = transformStrapiData(response.data.data, endpoint);
+        
+        setData(transformedData);
+        setError(null); // Clear any previous errors
+        
+      } catch (err) {
+        console.error(`Error fetching ${endpoint}:`, err);
+        setError('Failed to fetch from CMS');
+        // Don't set mock data - let the component handle the error state
       } finally {
         setIsLoading(false);
       }
@@ -34,47 +51,68 @@ const useCMSData = (endpoint) => {
   return { data, isLoading, error };
 };
 
-// Mock data function for demo purposes
-const getMockData = (endpoint) => {
-  const mockDataMap = {
-    home: {
-      title: "Welcome to Qoyy",
-      subtitle: "Innovative Solutions for Your Business",
-      description: "We provide cutting-edge solutions that help businesses grow and succeed in today's competitive market. Our team of experts is dedicated to delivering exceptional results that exceed expectations.",
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80"
-    },
-    about: {
-      title: "About Qoyy",
-      subtitle: "Your Trusted Partner",
-      description: "Founded with a vision to transform businesses through innovative technology solutions, Qoyy has been at the forefront of digital transformation. Our commitment to excellence and customer satisfaction drives everything we do.",
-      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
-    },
-    services: {
-      title: "Our Services",
-      subtitle: "Comprehensive Solutions",
-      description: "From web development to digital marketing, we offer a full range of services designed to help your business thrive in the digital age. Our expertise spans across multiple industries and technologies.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80"
-    },
-    info: {
-      title: "Quick Info",
-      subtitle: "Everything You Need to Know",
-      description: "Get quick access to important information about our company, services, and how we can help you achieve your business goals. We're here to provide clarity and support every step of the way.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-    },
-    contact: {
-      title: "Contact Us",
-      subtitle: "Let's Start a Conversation",
-      description: "Ready to take your business to the next level? Get in touch with us today. Our team is ready to discuss your needs and provide personalized solutions that drive results.",
-      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+// Transform Strapi data to match our frontend structure
+const transformStrapiData = (strapiData, endpoint) => {
+  if (!strapiData) {
+    return null;
+  }
+
+  // Check if data has attributes (nested structure) or is flat
+  let attributes = {};
+  
+  if (strapiData.attributes) {
+    // Nested structure: { data: { attributes: { title: "...", ... } } }
+    attributes = strapiData.attributes;
+  } else {
+    // Flat structure: { data: { title: "...", ... } }
+    attributes = strapiData;
+  }
+  
+  // Handle both richtext and string descriptions
+  let description = '';
+  if (typeof attributes.description === 'string') {
+    description = attributes.description;
+  } else if (attributes.description && attributes.description.content) {
+    // Handle richtext format
+    description = attributes.description.content || '';
+  }
+  
+  let imageUrl = null;
+  if (attributes.image) {
+    if (attributes.image.data?.attributes?.url) {
+      // Standard Strapi image structure
+      imageUrl = `http://localhost:1337${attributes.image.data.attributes.url}`;
+    } else if (attributes.image.url) {
+      // Direct URL structure
+      imageUrl = attributes.image.url.startsWith('http') 
+        ? attributes.image.url 
+        : `http://localhost:1337${attributes.image.url}`;
     }
+  }
+
+  // Handle background images
+  let backgroundImageUrl = null;
+  if (attributes.backgroundImage) {
+    if (attributes.backgroundImage.data?.attributes?.url) {
+      // Standard Strapi image structure
+      backgroundImageUrl = `http://localhost:1337${attributes.backgroundImage.data.attributes.url}`;
+    } else if (attributes.backgroundImage.url) {
+      // Direct URL structure
+      backgroundImageUrl = attributes.backgroundImage.url.startsWith('http') 
+        ? attributes.backgroundImage.url 
+        : `http://localhost:1337${attributes.backgroundImage.url}`;
+    }
+  }
+  
+  const transformedData = {
+    title: attributes.title || '',
+    subtitle: attributes.subtitle || '',
+    description: description,
+    image: imageUrl,
+    backgroundImage: backgroundImageUrl,
   };
 
-  return mockDataMap[endpoint] || {
-    title: "Page Not Found",
-    subtitle: "Content Unavailable",
-    description: "The requested content could not be loaded. Please try again later.",
-    image: null
-  };
+  return transformedData;
 };
 
 export default useCMSData; 

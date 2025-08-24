@@ -1,9 +1,34 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import LoadingSkeleton from '../components/LoadingSkeleton';
 import useCMSData from '../hooks/useCMSData';
 
 const About = () => {
-  const { data, isLoading, error } = useCMSData('about');
+  const { data, isLoading, error, refetch } = useCMSData('about');
+
+  // Debug logging
+  console.log('🔍 About component render:', { data, isLoading, error });
+
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+
+  if (error) {
+    return (
+      <div className="container-custom">
+        <div className="text-center text-white mt-8">
+          <h2 className="text-xl mb-4">Error Loading Content</h2>
+          <p className="text-red-400">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -13,24 +38,37 @@ const About = () => {
       </Helmet>
       
       <main className="container-custom">
-      <div className="relative flex items-center justify-center rounded-lg mt-8 mb-12 h-full">
-        <div className="relative w-full flex flex-col items-center justify-center px-4 h-full">
-          <h2 className="text-center text-white text-xl mb-10">
-            ABOUT US
-          </h2>
-          <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
-            CREATIVE IMPACT, MEASURABLE RESULTS.
-          </h1>
-          <p className="text-white text-base md:text-lg text-center mb-6 font-normal font-semibold">
-            Established in 2018 and based in Kuala Lumpur, we are an integrated marketing agency delivering end-to-end solutions across digital, creative, media, events, and print. With a growing team of 15 passionate professionals, we proudly serve over 20 retained government clients and 10 corporate brands. We’re continuously expanding to bring impactful ideas to more partners across Malaysia.
+
+
+        <div className="relative flex items-center justify-center rounded-lg mt-8 mb-12 h-full">
+          <div className="relative w-full flex flex-col items-center justify-center px-4 h-full">
+            <h2 className="text-center text-white text-xl mb-10">
+              {data?.subtitle || 'ABOUT US'}
+            </h2>
+            <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+              {data?.title || 'CREATIVE IMPACT, MEASURABLE RESULTS.'}
+            </h1>
+            {data?.description && (
+              <p className="text-white text-base md:text-lg text-center mb-6 font-normal font-semibold">
+                {data.description}
+              </p>
+            )}
+            {data?.image && (
+              <div className="mt-8 mb-6">
+                <img 
+                  src={data.image} 
+                  alt={data.title || 'About Us Image'} 
+                  className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full flex justify-center mb-10">
+          <p className="text-white text-center text-xl md:text-2xl font-bold w-full mb-10">
+            "OUR JOURNEY OF GROWTH IS BUILT ON SHARED SUCCESSES WITH THOSE WE SERVE."
           </p>
         </div>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full flex justify-center mb-10">
-        <p className="text-white text-center text-xl md:text-2xl font-bold w-full mb-10">
-          “OUR JOURNEY OF GROWTH IS BUILT ON SHARED SUCCESSES WITH THOSE WE SERVE.”
-        </p>
-      </div>
       </main>
     </>
   );
