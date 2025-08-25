@@ -18,7 +18,7 @@ export const STRAPI_CONFIG = {
   },
   
   // API token (temporarily removed for testing)
-  API_TOKEN: 'bb8be28691e7840bd46c62a3584ff02172558af7fdceb1ef21b9529841b62797bfa63a4baf700cf96511a3eb14aaf9f4e75e41261d0a36b59e368c374dab9240445050acc4d5f6570075713616650a8d6fd85c76f66b544e80547a2d0fc5805ef8b3cd98afc506c561b51e6beb7b101c648596617c6ca19593cb1fc3c679e55a', // ⚠️ Remove token temporarily to test public access
+  API_TOKEN: '374a6a1c410507079cd5cdc6a09af942477891cbd648a4c13a48594b939109539c6544b1cfc1617462c9e039da6f3ae6a20cb185b4041f7ffe420698a90094ece430d1fe0c02e92ee9fffd56e0df22b2c8faedae1906d35e0e9ce139cb8e08a4adee6e027d72d410198ca76e39eeece943844b7e2f557f29d3aafb312f4e8ee8', // ⚠️ Remove token temporarily to test public access
 };
 
 // Helper function to get full API URL

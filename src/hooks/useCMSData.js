@@ -15,9 +15,6 @@ const useCMSData = (endpoint) => {
         
         // Map endpoint to correct API path
         let apiPath = endpoint;
-        if (endpoint === 'services') {
-          apiPath = 'info'; // Map services to info endpoint
-        }
         
         const fullUrl = getStrapiURL(`/api/${apiPath}`);
         const headers = getAuthHeaders();
