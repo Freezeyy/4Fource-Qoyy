@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import useCMSData from '../hooks/useCMSData';
+import { contact } from '../cms/content';
 
 const Contact = () => {
   const { data, isLoading, error } = useCMSData('contact');
@@ -9,29 +10,27 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - Qoyy Global</title>
-        <meta name="description" content="Reach out for projects or possibilities. Let's build something great together with Qoyy Global." />
+        <title>{contact.seo.title}</title>
+        <meta name="description" content={contact.seo.description} />
       </Helmet>
-      
+     
       <main className="min-h-screen">
         <div className="container-custom section-padding">
           <div className="max-w-6xl mx-auto">
             {/* Main Heading */}
             <div className="text-center mb-12">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
-                Reach Out For Projects Or Possibilities
+                {contact.heading}
               </h1>
             </div>
 
             {/* Sub Heading */}
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-6xl font-bold text-orange-500 mb-8">
-                LET'S BUILD SOMETHING GREAT TOGETHER
+                {contact.subheading}
               </h2>
               <p className="text-xl md:text-2xl text-white leading-relaxed max-w-4xl mx-auto">
-                Whether you're looking for partnerships, career opportunities, collaborations, or want to join our team, 
-                we're here to help you achieve your goals. Reach out and let's start a conversation about how we can 
-                work together to create something amazing.
+                {contact.lead}
               </p>
             </div>
 
@@ -43,24 +42,24 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                   <div className="text-center">
                     <a
-                      href="https://wa.me/15551234567"
+                      href={contact.buttons.whatsapp.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-primary inline-block w-full py-6 text-xl font-bold"
                     >
-                      📱 CONTACT US VIA WHATSAPP
+                      {contact.buttons.whatsapp.label}
                     </a>
                     <p className="text-gray-400 mt-4">
                       Quick responses for urgent inquiries and immediate support
                     </p>
                   </div>
-                  
+                 
                   <div className="text-center">
                     <a
-                      href="mailto:info@qoyy.com"
+                      href={contact.buttons.email.href}
                       className="btn-secondary inline-block w-full py-6 text-xl font-bold"
                     >
-                      ✉️ CONTACT US VIA EMAIL
+                      {contact.buttons.email.label}
                     </a>
                     <p className="text-gray-400 mt-4">
                       Detailed project discussions and comprehensive proposals
@@ -78,33 +77,35 @@ const Contact = () => {
                       <span className="text-orange-500 mr-4 text-2xl">📍</span>
                       <div>
                         <div className="font-semibold">Address</div>
-                        <div>123 Business Street</div>
-                        <div>City, State 12345</div>
+                        {contact.info.addressLines.map((line, index) => (
+                          <div key={index}>{line}</div>
+                        ))}
                       </div>
                     </div>
-                    
+                   
                     <div className="flex items-center">
                       <span className="text-orange-500 mr-4 text-2xl">📞</span>
                       <div>
                         <div className="font-semibold">Phone</div>
-                        <div>(555) 123-4567</div>
+                        <div>{contact.info.phone}</div>
                       </div>
                     </div>
-                    
+                   
                     <div className="flex items-center">
                       <span className="text-orange-500 mr-4 text-2xl">✉️</span>
                       <div>
                         <div className="font-semibold">Email</div>
-                        <div>info@qoyy.com</div>
+                        <div>{contact.info.email}</div>
                       </div>
                     </div>
-                    
+                   
                     <div className="flex items-center">
                       <span className="text-orange-500 mr-4 text-2xl">🕒</span>
                       <div>
                         <div className="font-semibold">Business Hours</div>
-                        <div>Mon-Fri: 9:00 AM - 6:00 PM</div>
-                        <div>Sat: 10:00 AM - 4:00 PM</div>
+                        {contact.info.hours.map((hour, index) => (
+                          <div key={index}>{hour}</div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -118,4 +119,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; 
+export default Contact;

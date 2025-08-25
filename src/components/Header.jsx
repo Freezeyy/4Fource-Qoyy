@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { header } from '../cms/content';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
-  const navLinks = [
-    { path: '/about', label: 'ABOUT US' },
-    { path: '/services', label: 'OUR SERVICE' },
-    { path: '/info', label: 'QUICK INFO' },
-    { path: '/contact', label: 'CONTACT US' },
-  ];
 
   const isActive = (path) => location.pathname === path;
 
@@ -21,16 +15,16 @@ const Header = () => {
           <div className="flex items-center justify-between flex-1">
             {/* Logo */}
             <Link to="/" className="text-2xl font-bold text-white flex items-center">
-              <img 
-                src="/src/assets/QOYY GLOBAL-WHITE-LOGO.png" 
-                alt="QOYY GLOBAL" 
+              <img
+                src="/src/assets/QOYY GLOBAL-WHITE-LOGO.png"
+                alt={header.brand.logoText}
                 className="h-30 mr-2"
               />
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-4">
-              {navLinks.map((link) => (
+              {header.navLinks.filter(link => link.path !== '/').map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
@@ -74,12 +68,11 @@ const Header = () => {
           <div className="w-full h-1 bg-white mb-1"></div>
         </div>
 
-
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden bg-gray-800 border-t border-gray-700">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navLinks.map((link) => (
+              {header.navLinks.filter(link => link.path !== '/').map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
@@ -97,4 +90,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

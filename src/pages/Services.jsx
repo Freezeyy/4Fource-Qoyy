@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import LoadingSkeleton from '../components/LoadingSkeleton';
-import useCMSData from '../hooks/useCMSData';
+import { services } from '../cms/content';
 
 // Import background images
 import companyWebsiteImg from '../assets/Gambar_Company_Website.jpg';
@@ -12,65 +10,39 @@ import quickInfoBgImg from '../assets/quickInfo-bg.png';
 import contactUsImg from '../assets/contactUs.png';
 
 const Services = () => {
-  const { data, isLoading, error } = useCMSData('services');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Service content slides - exactly 5 slides with background images
+  // Service content slides - exactly 5 slides with background images using CMS data
   const serviceSlides = [
     {
-      title: "Media Monitoring",
-      description: "Real-time brand monitoring and sentiment analysis to keep your brand informed and relevant in today's fast-paced digital landscape.",
-      features: [
-        "24/7 brand monitoring",
-        "Sentiment analysis",
-        "Crisis detection",
-        "Competitive intelligence"
-      ],
+      title: services.cards[0].title,
+      description: services.cards[0].description,
+      features: services.cards[0].features,
       backgroundImage: companyWebsiteImg
     },
     {
-      title: "Public Relations",
-      description: "Strategic communication services that build and maintain your brand's reputation across all media channels.",
-      features: [
-        "Press release distribution",
-        "Media relations",
-        "Crisis management",
-        "Strategic communication"
-      ],
+      title: services.cards[1].title,
+      description: services.cards[1].description,
+      features: services.cards[1].features,
       backgroundImage: workerStateImg
     },
     {
-      title: "Digital PR",
-      description: "Comprehensive digital public relations solutions that enhance your online presence and engagement.",
-      features: [
-        "Social media management",
-        "Influencer partnerships",
-        "Content strategy",
-        "Online reputation management"
-      ],
+      title: services.cards[3].title,
+      description: services.cards[3].description,
+      features: services.cards[3].features,
       backgroundImage: agencyDiscussionImg
     },
     {
-      title: "Government Relations",
-      description: "Specialized services for government agencies and organizations working with public sector clients.",
-      features: [
-        "Policy communication",
-        "Stakeholder engagement",
-        "Regulatory compliance",
-        "Public affairs"
-      ],
+      title: services.cards[5].title,
+      description: services.cards[5].description,
+      features: services.cards[5].features,
       backgroundImage: quickInfoBgImg
     },
     {
-      title: "Creative Services",
-      description: "Innovative creative solutions that bring your brand vision to life through compelling visual and digital content.",
-      features: [
-        "Brand identity design",
-        "Digital marketing",
-        "Content creation",
-        "Creative strategy"
-      ],
+      title: services.cards[2].title,
+      description: services.cards[2].description,
+      features: services.cards[2].features,
       backgroundImage: contactUsImg
     }
   ];
@@ -90,8 +62,8 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Our Service - Qoyy Global</title>
-        <meta name="description" content="Solutions that drive brands forward. Media monitoring and public relations services that keep your brand informed, relevant, and strategically visible." />
+        <title>{services.seo.title}</title>
+        <meta name="description" content={services.seo.description} />
       </Helmet>
 
       {/* Full Page Background Layer - Behind Everything */}
@@ -118,9 +90,9 @@ const Services = () => {
               OUR SERVICE
             </h2>
             <h1 className="text-center text-2xl md:text-3xl lg:text-4xl font-extrabold text-white mb-6 uppercase">
-              Solutions That Drive Brands Forward.
+              {services.heading}
             </h1>
-            
+           
             {/* Sliding Content Section */}
             <div className="w-full mb-8">
               <div className="relative bg-black bg-opacity-30 rounded-lg p-8 mb-8 h-96 overflow-hidden">
@@ -148,7 +120,7 @@ const Services = () => {
                     ))}
                   </div>
                 </div>
-                
+               
                 {/* Right Arrow */}
                 <button
                   onClick={nextSlide}
@@ -170,7 +142,7 @@ const Services = () => {
                   </svg>
                 </button>
               </div>
-              
+             
               {/* Slide Indicators */}
               <div className="flex justify-center space-x-2">
                 {serviceSlides.map((_, index) => (
@@ -201,4 +173,4 @@ const Services = () => {
   );
 };
 
-export default Services; 
+export default Services;

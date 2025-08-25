@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { footer } from '../cms/content';
 
 const Footer = () => {
   return (
@@ -12,9 +13,9 @@ const Footer = () => {
               <tbody>
                 <tr>
                   <td className="pr-2 align-center">
-                    <img 
-                      src="/src/assets/Address.png" 
-                      alt="Address Icon" 
+                    <img
+                      src="/src/assets/Address.png"
+                      alt="Address Icon"
                       className="w-18 h-full inline-block align-middle"
                     />
                   </td>
@@ -24,9 +25,9 @@ const Footer = () => {
                 </tr>
                 <tr>
                   <td className="pr-2 align-center">
-                    <img 
-                      src="/src/assets/Letter.png" 
-                      alt="Email Icon" 
+                    <img
+                      src="/src/assets/Letter.png"
+                      alt="Email Icon"
                       className="w-18 h-full inline-block align-middle"
                     />
                   </td>
@@ -36,9 +37,9 @@ const Footer = () => {
                 </tr>
                 <tr>
                   <td className="pr-2 align-center">
-                    <img 
-                      src="/src/assets/Phone.png" 
-                      alt="Phone Icon" 
+                    <img
+                      src="/src/assets/Phone.png"
+                      alt="Phone Icon"
                       className="w-18 h-full inline-block align-middle"
                     />
                   </td>
@@ -53,31 +54,28 @@ const Footer = () => {
           {/* Logo and Copyright */}
           <div className="flex flex-col items-center justify-center space-y-4 h-full">
             <div className="flex items-center">
-              <img 
-                src="/src/assets/QOYY GLOBAL-WHITE-LOGO.png" 
-                alt="QOYY GLOBAL" 
+              <img
+                src="/src/assets/QOYY GLOBAL-WHITE-LOGO.png"
+                alt={footer.companyName}
                 className="h-32"
               />
             </div>
             <p className="text-sm text-center !mt-0">
-              COPYRIGHT © 2025 QOYY GLOBAL (002857086-D) All rights reserved.
+              {footer.copyright}
             </p>
           </div>
 
           {/* Navigation Links */}
           <div className="flex flex-col items-end gap-2 justify-evenly h-full">
-            <Link to="/about" className="text-white font-semibold text-sm hover:underline">
-              ABOUT US
-            </Link>
-            <Link to="/services" className="text-white font-semibold text-sm hover:underline">
-              OUR SERVICE
-            </Link>
-            <Link to="/info" className="text-white font-semibold text-sm hover:underline">
-              QUICK INFO
-            </Link>
-            <Link to="/contact" className="text-white font-semibold text-sm hover:underline">
-              CONTACT US
-            </Link>
+            {footer.quickLinks.filter(link => link.path !== '/').map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path} 
+                className="text-white font-semibold text-sm hover:underline"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
@@ -85,4 +83,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;
